@@ -23,3 +23,13 @@ func Update() *errs.ErrWrap {
 func Delete() *errs.ErrWrap {
 	return errs.New(101004, "数据删除失败")
 }
+
+// First First
+func First() *errs.ErrWrap {
+	return errs.New(101005, "数据查找失败")
+}
+
+// RecordNotFound RecordNotFound
+func RecordNotFound() *errs.ErrWrap {
+	return errs.New(101006, "数据不存在")
+}
