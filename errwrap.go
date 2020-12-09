@@ -19,8 +19,8 @@ func (errWrap *ErrWrap) Error() string {
 	return errWrap.Msg
 }
 
-// NewErrWrap NewErrWrap
-func NewErrWrap(code int, msg string) *ErrWrap {
+// New New
+func New(code int, msg string) *ErrWrap {
 	e := new(ErrWrap)
 	e.Code = code
 	e.Msg = msg
