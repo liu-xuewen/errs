@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	Success = NewErrWrap(0, "操作成功")
-	Fail    = NewErrWrap(999999, "操作失败")
+	Success = New(0, "操作成功")
+	Fail    = New(999999, "操作失败")
 )
 
 type ErrWrapLog *ErrWrap

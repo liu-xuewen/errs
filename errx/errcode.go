@@ -2,7 +2,7 @@ package errx
 
 import "github.com/liu-xuewen/errs"
 
-// begin with 101
+// 101 err code
 
 // DB DB
 func DB() *errs.ErrWrap {
