@@ -15,8 +15,8 @@ var (
 
 type ErrWrapLog *ErrWrap
 
-// DecodeErrWrap DecodeErrWrap
-func DecodeErrWrap(ctx context.Context, err error) (int, string) {
+// DeErrCodeLog DeErrCodeLog
+func DeErrCodeLog(ctx context.Context, err error) (int, string) {
 	if err == nil {
 		return Success.Code, Success.Msg
 	}
@@ -32,4 +32,23 @@ func DecodeErrWrap(ctx context.Context, err error) (int, string) {
 	}
 
 	return Fail.Code, Fail.Msg
+}
+
+// DeErrLog DeErrLog
+func DeErrLog(ctx context.Context, err error) string {
+	if err == nil {
+		return ""
+	}
+	switch typed := err.(type) {
+	case *ErrWrap:
+		errWrap := err.(*ErrWrap)
+		logger.Error(ctx, errWrap.Msg, "err_wrap", ErrWrapLog(errWrap))
+		return typed.Msg + strconv.Itoa(typed.Code)
+	default:
+		_, file, line, _ := runtime.Caller(1)
+		path := file + strconv.Itoa(line)
+		logger.Error(ctx, "default", "err", err, "path", path)
+	}
+
+	return Fail.Msg + strconv.Itoa(Fail.Code)
 }
