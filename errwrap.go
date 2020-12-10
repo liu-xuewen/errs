@@ -65,3 +65,8 @@ func (errWrap *ErrWrap) Bind(params ...interface{}) *ErrWrap {
 	errWrap.Params = append(errWrap.Params, params)
 	return errWrap
 }
+
+// Log Log
+func (errWrap *ErrWrap) Log() ErrWrapLog {
+	return ErrWrapLog(errWrap)
+}
