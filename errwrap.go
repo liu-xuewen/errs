@@ -5,6 +5,9 @@ import (
 	"strconv"
 )
 
+var DefaultCode = 999999
+var DefaultMsg = "操作失败"
+
 // ErrWrap ErrWrap队列挂载err
 type ErrWrap struct {
 	Code   int           `json:"code"`
@@ -27,9 +30,16 @@ func New(code int, msg string) *ErrWrap {
 	return e
 }
 
+func NewDefault() *ErrWrap {
+	e := new(ErrWrap)
+	e.Code = DefaultCode
+	e.Msg = DefaultMsg
+	return e
+}
+
 // Wrap Wrap
 func Wrap(err error, params ...interface{}) *ErrWrap {
-	errWrap := new(ErrWrap)
+	errWrap := NewDefault()
 	_, file, line, _ := runtime.Caller(1)
 	errWrap.Path = file + strconv.Itoa(line)
 	errWrap.Params = params
@@ -57,6 +67,16 @@ func (errWrap *ErrWrap) Wrap(err error, params ...interface{}) *ErrWrap {
 		return er
 	}
 	errWrap.Err = err
+	return errWrap
+}
+
+// Msg Msg
+func Msg(msg string, params ...interface{}) *ErrWrap {
+	errWrap := NewDefault()
+	_, file, line, _ := runtime.Caller(1)
+	errWrap.Path = file + strconv.Itoa(line)
+	errWrap.Params = params
+	errWrap.Msg = msg
 	return errWrap
 }
 
